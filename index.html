@@ -5,24 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Study OS</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
 </head>
 <body>
 
-  <!-- ===== SPLASH ===== -->
+  <!-- SPLASH -->
   <div id="splash">
     <div class="splash-inner">
       <div class="splash-dot-grid"></div>
       <p class="splash-label">STUDY OS</p>
-      <p class="splash-sub">v1.0</p>
+      <p class="splash-sub">v2.0</p>
     </div>
   </div>
 
-  <!-- ===== APP WRAPPER ===== -->
+  <!-- APP -->
   <div id="app" class="hidden">
 
-    <!-- TOP BAR -->
     <header class="topbar">
       <span class="topbar-title" id="topbar-title">STUDY OS</span>
       <div class="topbar-dots">
@@ -30,10 +32,9 @@
       </div>
     </header>
 
-    <!-- VIEWS -->
     <main class="views">
 
-      <!-- === VIEW: HOME === -->
+      <!-- HOME -->
       <section class="view active" id="view-home">
         <div class="home-hero">
           <div class="dot-grid-bg"></div>
@@ -59,18 +60,14 @@
         </div>
       </section>
 
-      <!-- === VIEW: NOTAS === -->
+      <!-- NOTAS -->
       <section class="view" id="view-notas">
         <div class="view-header">
           <button class="back-btn" onclick="navigate('home')">← Volver</button>
           <h2 class="view-title">Asignaturas</h2>
           <button class="icon-btn" onclick="openModal('modal-nueva-asignatura')">+</button>
         </div>
-
-        <div id="asignaturas-list" class="asignaturas-list">
-          <!-- Rendered by JS -->
-        </div>
-
+        <div id="asignaturas-list" class="asignaturas-list"></div>
         <div class="empty-state" id="empty-notas">
           <p class="empty-icon">◈</p>
           <p>Sin asignaturas aún.</p>
@@ -78,61 +75,66 @@
         </div>
       </section>
 
-      <!-- === VIEW: ASIGNATURA DETALLE === -->
+      <!-- DETALLE ASIGNATURA -->
       <section class="view" id="view-asignatura">
         <div class="view-header">
           <button class="back-btn" onclick="navigate('notas')">← Volver</button>
           <h2 class="view-title" id="detalle-title">Asignatura</h2>
-          <button class="icon-btn danger" id="btn-delete-asignatura">✕</button>
+          <button class="icon-btn danger" id="btn-delete-asignatura" title="Eliminar asignatura">✕</button>
         </div>
-
         <div class="media-display">
           <span class="media-label">MEDIA FINAL</span>
           <span class="media-value" id="media-valor">—</span>
           <span class="media-pct" id="media-pct-info"></span>
         </div>
-
         <div id="actividades-list" class="actividades-list"></div>
-
         <button class="btn-outline full-width" onclick="openModal('modal-nueva-actividad')">
           + Nueva actividad
         </button>
       </section>
 
-      <!-- === VIEW: HORARIO === -->
+      <!-- HORARIO -->
       <section class="view" id="view-horario">
         <div class="view-header">
           <button class="back-btn" onclick="navigate('home')">← Volver</button>
           <h2 class="view-title">Horario</h2>
           <button class="btn-text" onclick="saveHorario()">Guardar</button>
         </div>
+        <p class="hint top-hint">Toca las cabeceras o horas para editarlas. Las celdas se guardan automáticamente.</p>
         <div class="horario-wrapper">
-          <table class="horario-table" id="horario-table">
-            <!-- Rendered by JS -->
-          </table>
+          <table class="horario-table" id="horario-table"></table>
         </div>
-        <p class="hint">Toca una celda para editarla.</p>
       </section>
 
-      <!-- === VIEW: AJUSTES === -->
+      <!-- AJUSTES -->
       <section class="view" id="view-ajustes">
         <div class="view-header">
           <button class="back-btn" onclick="navigate('home')">← Volver</button>
           <h2 class="view-title">Ajustes</h2>
         </div>
         <div class="ajustes-list">
+
+          <!-- Color de acento -->
+          <div class="ajuste-item ajuste-block">
+            <p class="ajuste-label">Color de acento</p>
+            <p class="ajuste-desc">Personaliza el color principal de la app.</p>
+            <div class="color-palette" id="color-palette"></div>
+          </div>
+
           <div class="ajuste-item">
             <div>
               <p class="ajuste-label">Versión</p>
-              <p class="ajuste-desc">Study OS v1.0</p>
+              <p class="ajuste-desc">Study OS v2.0</p>
             </div>
           </div>
+
           <div class="ajuste-item">
             <div>
               <p class="ajuste-label">Datos guardados</p>
               <p class="ajuste-desc" id="storage-size">Calculando...</p>
             </div>
           </div>
+
           <div class="ajuste-item danger-zone">
             <div>
               <p class="ajuste-label">Borrar todos los datos</p>
@@ -140,35 +142,30 @@
             </div>
             <button class="btn-danger" onclick="confirmarBorrado()">Borrar</button>
           </div>
+
         </div>
       </section>
 
     </main>
 
-    <!-- BOTTOM NAV -->
     <nav class="bottom-nav">
       <button class="nav-btn active" data-view="home" onclick="navigate('home')">
-        <span class="nav-icon">⊡</span>
-        <span>Inicio</span>
+        <span class="nav-icon">⊡</span><span>Inicio</span>
       </button>
       <button class="nav-btn" data-view="notas" onclick="navigate('notas')">
-        <span class="nav-icon">◈</span>
-        <span>Notas</span>
+        <span class="nav-icon">◈</span><span>Notas</span>
       </button>
       <button class="nav-btn" data-view="horario" onclick="navigate('horario')">
-        <span class="nav-icon">◫</span>
-        <span>Horario</span>
+        <span class="nav-icon">◫</span><span>Horario</span>
       </button>
       <button class="nav-btn" data-view="ajustes" onclick="navigate('ajustes')">
-        <span class="nav-icon">◎</span>
-        <span>Ajustes</span>
+        <span class="nav-icon">◎</span><span>Ajustes</span>
       </button>
     </nav>
   </div>
 
-  <!-- ===== MODALS ===== -->
+  <!-- MODALS -->
 
-  <!-- Modal: Nueva Asignatura -->
   <div class="modal-overlay" id="modal-nueva-asignatura">
     <div class="modal">
       <div class="modal-header">
@@ -186,7 +183,6 @@
     </div>
   </div>
 
-  <!-- Modal: Nueva Actividad -->
   <div class="modal-overlay" id="modal-nueva-actividad">
     <div class="modal">
       <div class="modal-header">
@@ -216,7 +212,6 @@
     </div>
   </div>
 
-  <!-- Modal: Editar Actividad -->
   <div class="modal-overlay" id="modal-editar-actividad">
     <div class="modal">
       <div class="modal-header">
@@ -247,23 +242,20 @@
     </div>
   </div>
 
-  <!-- Modal: Confirmar borrado -->
+  <!-- Modal confirmar — botón con onclick directo para evitar doble listener -->
   <div class="modal-overlay" id="modal-confirmar">
     <div class="modal">
-      <div class="modal-header">
-        <span>¿Seguro?</span>
-      </div>
+      <div class="modal-header"><span>¿Confirmar?</span></div>
       <div class="modal-body">
-        <p class="modal-text" id="confirmar-texto">Esta acción no se puede deshacer.</p>
+        <p class="modal-text" id="confirmar-texto"></p>
       </div>
       <div class="modal-footer">
         <button class="btn-ghost" onclick="closeModal('modal-confirmar')">Cancelar</button>
-        <button class="btn-danger" id="confirmar-btn">Confirmar</button>
+        <button class="btn-danger" onclick="ejecutarConfirmacion()">Confirmar</button>
       </div>
     </div>
   </div>
 
-  <!-- Toast -->
   <div id="toast" class="toast"></div>
 
   <script src="script.js"></script>
