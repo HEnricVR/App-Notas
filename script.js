@@ -493,20 +493,6 @@ function navigate(view, asigId=null) {
 }
 
 // ============================================================
-// SIDEBAR toggle
-// ============================================================
-function toggleSidebar() {
-  const sb = document.getElementById('sidebar');
-  const ov = document.getElementById('sidebar-overlay');
-  sb.classList.toggle('open');
-  ov.classList.toggle('show');
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('sidebar-overlay').classList.remove('show');
-}
-
-// ============================================================
 // MODALS
 // ============================================================
 function openModal(id) { document.getElementById(id).classList.add('open'); }
@@ -979,25 +965,48 @@ function confirmarBorrado() {
 document.getElementById('input-asignatura-nombre').addEventListener('keydown',e=>{if(e.key==='Enter')crearAsignatura();});
 
 // ============================================================
+// SIDEBAR toggle (móvil)
+// ============================================================
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('sidebar-overlay');
+  if (sb.classList.contains('open')) {
+    sb.classList.remove('open');
+    ov.classList.remove('show');
+  } else {
+    sb.classList.add('open');
+    ov.classList.add('show');
+  }
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('show');
+}
+
+// ============================================================
 // INIT
 // ============================================================
-window.addEventListener('DOMContentLoaded',()=>{
-  // Cargar idioma
-  const savedLang=localStorage.getItem('lang')||'es';
-  currentLang=savedLang;
-  document.getElementById('lang-select').value=savedLang;
+window.addEventListener('DOMContentLoaded', () => {
+  const savedLang = localStorage.getItem('lang') || 'es';
+  currentLang = savedLang;
+  document.getElementById('lang-select').value = savedLang;
   applyTranslations();
-
   loadAccentColor();
 
-  setTimeout(()=>{
-    document.getElementById('splash').style.pointerEvents='none';
-    const app=document.getElementById('app');
-    app.classList.remove('hidden'); app.classList.add('visible');
-  },1600);
+  // App visible desde el inicio, splash encima como overlay
+  const splash = document.getElementById('splash');
+  const app = document.getElementById('app');
+  app.classList.remove('hidden');
 
-  // Color picker nueva tarea (inicializar al primer clic)
-  document.querySelector('[onclick="openModal(\'modal-nueva-tarea\')"]')?.addEventListener('click',()=>{
-    setTimeout(()=>renderColorPicker('tarea-color-picker',selectedTareaColor,c=>selectedTareaColor=c),50);
+  setTimeout(() => {
+    splash.classList.add('hide');
+    setTimeout(() => { splash.style.display = 'none'; }, 450);
+  }, 1400);
+
+  // Color picker nueva tarea
+  document.querySelectorAll('[onclick*="modal-nueva-tarea"]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      setTimeout(() => renderColorPicker('tarea-color-picker', selectedTareaColor, c => selectedTareaColor = c), 80);
+    });
   });
 });
