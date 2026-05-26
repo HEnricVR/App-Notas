@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Study OS</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
@@ -18,167 +18,251 @@
     <div class="splash-inner">
       <div class="splash-dot-grid"></div>
       <p class="splash-label">STUDY OS</p>
-      <p class="splash-sub">v2.0</p>
+      <p class="splash-sub">v3.0</p>
     </div>
   </div>
 
   <!-- APP -->
   <div id="app" class="hidden">
 
-    <header class="topbar">
-      <span class="topbar-title" id="topbar-title">STUDY OS</span>
-      <div class="topbar-dots">
-        <span></span><span></span><span></span>
+    <!-- SIDEBAR (desktop) -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <span class="sidebar-logo-icon">◈</span>
+        <span class="sidebar-logo-text">STUDY OS</span>
       </div>
-    </header>
-
-    <main class="views">
-
-      <!-- HOME -->
-      <section class="view active" id="view-home">
-        <div class="home-hero">
-          <div class="dot-grid-bg"></div>
-          <h1 class="hero-title">Study<br/><em>OS</em></h1>
-          <p class="hero-sub">Tu sistema de estudio.<br/>Minimalista. Silencioso. Tuyo.</p>
-        </div>
-        <div class="home-cards">
-          <button class="home-card" onclick="navigate('notas')">
-            <span class="card-icon">◈</span>
-            <span class="card-label">Asignaturas</span>
-            <span class="card-arrow">→</span>
-          </button>
-          <button class="home-card" onclick="navigate('horario')">
-            <span class="card-icon">◫</span>
-            <span class="card-label">Horario</span>
-            <span class="card-arrow">→</span>
-          </button>
-          <button class="home-card" onclick="navigate('ajustes')">
-            <span class="card-icon">◎</span>
-            <span class="card-label">Ajustes</span>
-            <span class="card-arrow">→</span>
-          </button>
-        </div>
-      </section>
-
-      <!-- NOTAS -->
-      <section class="view" id="view-notas">
-        <div class="view-header">
-          <button class="back-btn" onclick="navigate('home')">← Volver</button>
-          <h2 class="view-title">Asignaturas</h2>
-          <button class="icon-btn" onclick="openModal('modal-nueva-asignatura')">+</button>
-        </div>
-        <div id="asignaturas-list" class="asignaturas-list"></div>
-        <div class="empty-state" id="empty-notas">
-          <p class="empty-icon">◈</p>
-          <p>Sin asignaturas aún.</p>
-          <button class="btn-ghost" onclick="openModal('modal-nueva-asignatura')">Crear asignatura</button>
-        </div>
-      </section>
-
-      <!-- DETALLE ASIGNATURA -->
-      <section class="view" id="view-asignatura">
-        <div class="view-header">
-          <button class="back-btn" onclick="navigate('notas')">← Volver</button>
-          <h2 class="view-title" id="detalle-title">Asignatura</h2>
-          <button class="icon-btn danger" id="btn-delete-asignatura" title="Eliminar asignatura">✕</button>
-        </div>
-        <div class="media-display">
-          <span class="media-label">MEDIA FINAL</span>
-          <span class="media-value" id="media-valor">—</span>
-          <span class="media-pct" id="media-pct-info"></span>
-        </div>
-        <div id="actividades-list" class="actividades-list"></div>
-        <button class="btn-outline full-width" onclick="openModal('modal-nueva-actividad')">
-          + Nueva actividad
+      <nav class="sidebar-nav">
+        <button class="sidebar-btn active" data-view="home" onclick="navigate('home')">
+          <span class="s-icon">⊡</span><span class="s-label" data-i18n="nav_home">Inicio</span>
         </button>
-      </section>
+        <button class="sidebar-btn" data-view="notas" onclick="navigate('notas')">
+          <span class="s-icon">◈</span><span class="s-label" data-i18n="nav_notas">Notas</span>
+        </button>
+        <button class="sidebar-btn" data-view="tareas" onclick="navigate('tareas')">
+          <span class="s-icon">◧</span><span class="s-label" data-i18n="nav_tareas">Tareas</span>
+        </button>
+        <button class="sidebar-btn" data-view="horario" onclick="navigate('horario')">
+          <span class="s-icon">◫</span><span class="s-label" data-i18n="nav_horario">Horario</span>
+        </button>
+        <button class="sidebar-btn" data-view="ajustes" onclick="navigate('ajustes')">
+          <span class="s-icon">◎</span><span class="s-label" data-i18n="nav_ajustes">Ajustes</span>
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="sidebar-footer-text">by HEnricVR</span>
+      </div>
+    </aside>
 
-      <!-- HORARIO -->
-      <section class="view" id="view-horario">
-        <div class="view-header">
-          <button class="back-btn" onclick="navigate('home')">← Volver</button>
-          <h2 class="view-title">Horario</h2>
-          <button class="btn-text" onclick="saveHorario()">Guardar</button>
-        </div>
-        <p class="hint top-hint">Toca las cabeceras o horas para editarlas. Las celdas se guardan automáticamente.</p>
-        <div class="horario-wrapper">
-          <table class="horario-table" id="horario-table"></table>
-        </div>
-      </section>
+    <!-- MAIN AREA -->
+    <div class="main-area">
 
-      <!-- AJUSTES -->
-      <section class="view" id="view-ajustes">
-        <div class="view-header">
-          <button class="back-btn" onclick="navigate('home')">← Volver</button>
-          <h2 class="view-title">Ajustes</h2>
+      <header class="topbar">
+        <button class="topbar-menu-btn" id="menu-toggle" onclick="toggleSidebar()">☰</button>
+        <span class="topbar-title" id="topbar-title">STUDY OS</span>
+        <div class="topbar-dots">
+          <span></span><span></span><span></span>
         </div>
-        <div class="ajustes-list">
+      </header>
 
-          <!-- Color de acento -->
-          <div class="ajuste-item ajuste-block">
-            <p class="ajuste-label">Color de acento</p>
-            <p class="ajuste-desc">Personaliza el color principal de la app.</p>
-            <div class="color-palette" id="color-palette"></div>
+      <main class="views">
+
+        <!-- HOME -->
+        <section class="view active" id="view-home">
+          <div class="home-hero">
+            <div class="dot-grid-bg"></div>
+            <h1 class="hero-title">Study<br/><em>OS</em></h1>
+            <p class="hero-sub" data-i18n="hero_sub">Tu web de estudio favorita,<br/>by HEnricVR</p>
           </div>
+          <div class="home-cards">
+            <button class="home-card" onclick="navigate('notas')">
+              <span class="card-icon">◈</span>
+              <span class="card-label" data-i18n="nav_notas">Asignaturas</span>
+              <span class="card-arrow">→</span>
+            </button>
+            <button class="home-card" onclick="navigate('tareas')">
+              <span class="card-icon">◧</span>
+              <span class="card-label" data-i18n="nav_tareas">Tareas</span>
+              <span class="card-arrow">→</span>
+            </button>
+            <button class="home-card" onclick="navigate('horario')">
+              <span class="card-icon">◫</span>
+              <span class="card-label" data-i18n="nav_horario">Horario</span>
+              <span class="card-arrow">→</span>
+            </button>
+            <button class="home-card" onclick="navigate('ajustes')">
+              <span class="card-icon">◎</span>
+              <span class="card-label" data-i18n="nav_ajustes">Ajustes</span>
+              <span class="card-arrow">→</span>
+            </button>
+          </div>
+        </section>
 
-          <div class="ajuste-item">
-            <div>
-              <p class="ajuste-label">Versión</p>
-              <p class="ajuste-desc">Study OS v2.0</p>
+        <!-- NOTAS -->
+        <section class="view" id="view-notas">
+          <div class="view-header">
+            <button class="back-btn mobile-only" onclick="navigate('home')">←</button>
+            <h2 class="view-title" data-i18n="nav_notas">Asignaturas</h2>
+            <button class="icon-btn" onclick="openModal('modal-nueva-asignatura')">+</button>
+          </div>
+          <div id="asignaturas-list" class="asignaturas-list"></div>
+          <div class="empty-state" id="empty-notas">
+            <p class="empty-icon">◈</p>
+            <p data-i18n="empty_notas">Sin asignaturas aún.</p>
+            <button class="btn-ghost" onclick="openModal('modal-nueva-asignatura')" data-i18n="crear_asignatura">Crear asignatura</button>
+          </div>
+        </section>
+
+        <!-- DETALLE ASIGNATURA -->
+        <section class="view" id="view-asignatura">
+          <div class="view-header">
+            <button class="back-btn" onclick="navigate('notas')">←</button>
+            <h2 class="view-title" id="detalle-title">Asignatura</h2>
+            <button class="icon-btn danger" id="btn-delete-asignatura" title="Eliminar">✕</button>
+          </div>
+          <div class="media-display">
+            <span class="media-label" data-i18n="media_label">MEDIA FINAL</span>
+            <span class="media-value" id="media-valor">—</span>
+            <span class="media-pct" id="media-pct-info"></span>
+          </div>
+          <div id="actividades-list" class="actividades-list"></div>
+          <button class="btn-outline full-width" onclick="openModal('modal-nueva-actividad')" data-i18n="nueva_actividad">+ Nueva actividad</button>
+        </section>
+
+        <!-- TAREAS -->
+        <section class="view" id="view-tareas">
+          <div class="view-header">
+            <button class="back-btn mobile-only" onclick="navigate('home')">←</button>
+            <h2 class="view-title" data-i18n="nav_tareas">Tareas</h2>
+            <button class="icon-btn" onclick="openModal('modal-nueva-tarea')">+</button>
+          </div>
+          <div class="tareas-hint" id="tareas-hint">
+            <span data-i18n="tareas_hint">Arrastra las tarjetas para reorganizarlas</span>
+          </div>
+          <div id="tareas-board" class="tareas-board"></div>
+          <div class="empty-state" id="empty-tareas">
+            <p class="empty-icon">◧</p>
+            <p data-i18n="empty_tareas">Sin tareas aún.</p>
+            <button class="btn-ghost" onclick="openModal('modal-nueva-tarea')" data-i18n="crear_tarea">Crear tarea</button>
+          </div>
+        </section>
+
+        <!-- HORARIO -->
+        <section class="view" id="view-horario">
+          <div class="view-header">
+            <button class="back-btn mobile-only" onclick="navigate('home')">←</button>
+            <h2 class="view-title" data-i18n="nav_horario">Horario</h2>
+            <button class="btn-text" onclick="saveHorario()" data-i18n="guardar">Guardar</button>
+          </div>
+          <p class="hint top-hint" data-i18n="horario_hint">Toca las cabeceras o horas para editarlas.</p>
+          <div class="horario-wrapper">
+            <table class="horario-table" id="horario-table"></table>
+          </div>
+        </section>
+
+        <!-- AJUSTES -->
+        <section class="view" id="view-ajustes">
+          <div class="view-header">
+            <button class="back-btn mobile-only" onclick="navigate('home')">←</button>
+            <h2 class="view-title" data-i18n="nav_ajustes">Ajustes</h2>
+          </div>
+          <div class="ajustes-list">
+
+            <!-- Idioma -->
+            <div class="ajuste-item ajuste-block">
+              <div class="ajuste-row">
+                <div>
+                  <p class="ajuste-label" data-i18n="ajuste_idioma">Idioma</p>
+                  <p class="ajuste-desc" data-i18n="ajuste_idioma_desc">Cambia el idioma de la app</p>
+                </div>
+                <div class="lang-selector-wrap">
+                  <span class="lang-globe">⊕</span>
+                  <select class="field-input lang-select" id="lang-select" onchange="cambiarIdioma(this.value)">
+                    <option value="es">Español</option>
+                    <option value="en">English</option>
+                    <option value="fr">Français</option>
+                    <option value="de">Deutsch</option>
+                    <option value="pt">Português</option>
+                    <option value="zh">中文</option>
+                    <option value="ru">Русский</option>
+                    <option value="hi">हिन्दी</option>
+                  </select>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div class="ajuste-item">
-            <div>
-              <p class="ajuste-label">Datos guardados</p>
-              <p class="ajuste-desc" id="storage-size">Calculando...</p>
+            <!-- Color -->
+            <div class="ajuste-item ajuste-block">
+              <p class="ajuste-label" data-i18n="ajuste_color">Color de acento</p>
+              <p class="ajuste-desc" data-i18n="ajuste_color_desc">Personaliza el color principal de la app.</p>
+              <div class="color-palette" id="color-palette"></div>
             </div>
-          </div>
 
-          <div class="ajuste-item danger-zone">
-            <div>
-              <p class="ajuste-label">Borrar todos los datos</p>
-              <p class="ajuste-desc">Esta acción no se puede deshacer.</p>
+            <div class="ajuste-item">
+              <div>
+                <p class="ajuste-label" data-i18n="ajuste_version">Versión</p>
+                <p class="ajuste-desc">Study OS v3.0</p>
+              </div>
             </div>
-            <button class="btn-danger" onclick="confirmarBorrado()">Borrar</button>
+
+            <div class="ajuste-item">
+              <div>
+                <p class="ajuste-label" data-i18n="ajuste_datos">Datos guardados</p>
+                <p class="ajuste-desc" id="storage-size">—</p>
+              </div>
+            </div>
+
+            <div class="ajuste-item danger-zone">
+              <div>
+                <p class="ajuste-label" data-i18n="ajuste_borrar">Borrar todos los datos</p>
+                <p class="ajuste-desc" data-i18n="ajuste_borrar_desc">Esta acción no se puede deshacer.</p>
+              </div>
+              <button class="btn-danger" onclick="confirmarBorrado()" data-i18n="borrar">Borrar</button>
+            </div>
+
           </div>
+        </section>
 
-        </div>
-      </section>
+      </main>
 
-    </main>
+      <!-- BOTTOM NAV (mobile) -->
+      <nav class="bottom-nav" id="bottom-nav">
+        <button class="nav-btn active" data-view="home" onclick="navigate('home')">
+          <span class="nav-icon">⊡</span><span data-i18n="nav_home">Inicio</span>
+        </button>
+        <button class="nav-btn" data-view="notas" onclick="navigate('notas')">
+          <span class="nav-icon">◈</span><span data-i18n="nav_notas">Notas</span>
+        </button>
+        <button class="nav-btn" data-view="tareas" onclick="navigate('tareas')">
+          <span class="nav-icon">◧</span><span data-i18n="nav_tareas">Tareas</span>
+        </button>
+        <button class="nav-btn" data-view="horario" onclick="navigate('horario')">
+          <span class="nav-icon">◫</span><span data-i18n="nav_horario">Horario</span>
+        </button>
+        <button class="nav-btn" data-view="ajustes" onclick="navigate('ajustes')">
+          <span class="nav-icon">◎</span><span data-i18n="nav_ajustes">Ajustes</span>
+        </button>
+      </nav>
+    </div><!-- /main-area -->
 
-    <nav class="bottom-nav">
-      <button class="nav-btn active" data-view="home" onclick="navigate('home')">
-        <span class="nav-icon">⊡</span><span>Inicio</span>
-      </button>
-      <button class="nav-btn" data-view="notas" onclick="navigate('notas')">
-        <span class="nav-icon">◈</span><span>Notas</span>
-      </button>
-      <button class="nav-btn" data-view="horario" onclick="navigate('horario')">
-        <span class="nav-icon">◫</span><span>Horario</span>
-      </button>
-      <button class="nav-btn" data-view="ajustes" onclick="navigate('ajustes')">
-        <span class="nav-icon">◎</span><span>Ajustes</span>
-      </button>
-    </nav>
-  </div>
+    <!-- Overlay sidebar móvil -->
+    <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
+
+  </div><!-- /app -->
 
   <!-- MODALS -->
-
   <div class="modal-overlay" id="modal-nueva-asignatura">
     <div class="modal">
       <div class="modal-header">
-        <span>Nueva asignatura</span>
+        <span data-i18n="modal_nueva_asig">Nueva asignatura</span>
         <button onclick="closeModal('modal-nueva-asignatura')">✕</button>
       </div>
       <div class="modal-body">
-        <label class="field-label">Nombre</label>
-        <input type="text" class="field-input" id="input-asignatura-nombre" placeholder="Ej: Matemáticas" />
+        <label class="field-label" data-i18n="label_nombre">Nombre</label>
+        <input type="text" class="field-input" id="input-asignatura-nombre" data-i18n-placeholder="placeholder_asig" placeholder="Ej: Matemáticas" />
       </div>
       <div class="modal-footer">
-        <button class="btn-ghost" onclick="closeModal('modal-nueva-asignatura')">Cancelar</button>
-        <button class="btn-primary" onclick="crearAsignatura()">Crear</button>
+        <button class="btn-ghost" onclick="closeModal('modal-nueva-asignatura')" data-i18n="cancelar">Cancelar</button>
+        <button class="btn-primary" onclick="crearAsignatura()" data-i18n="crear">Crear</button>
       </div>
     </div>
   </div>
@@ -186,28 +270,28 @@
   <div class="modal-overlay" id="modal-nueva-actividad">
     <div class="modal">
       <div class="modal-header">
-        <span>Nueva actividad</span>
+        <span data-i18n="modal_nueva_act">Nueva actividad</span>
         <button onclick="closeModal('modal-nueva-actividad')">✕</button>
       </div>
       <div class="modal-body">
-        <label class="field-label">Nombre de la actividad</label>
-        <input type="text" class="field-input" id="input-actividad-nombre" placeholder="Ej: Examen parcial" />
-        <label class="field-label">Tipo</label>
+        <label class="field-label" data-i18n="label_nombre_act">Nombre de la actividad</label>
+        <input type="text" class="field-input" id="input-actividad-nombre" data-i18n-placeholder="placeholder_act" placeholder="Ej: Examen parcial" />
+        <label class="field-label" data-i18n="label_tipo">Tipo</label>
         <select class="field-input" id="input-actividad-tipo">
-          <option value="examen">Examen</option>
-          <option value="trabajo">Trabajo</option>
-          <option value="proyecto">Proyecto</option>
-          <option value="practica">Práctica</option>
-          <option value="otro">Otro</option>
+          <option value="examen" data-i18n="tipo_examen">Examen</option>
+          <option value="trabajo" data-i18n="tipo_trabajo">Trabajo</option>
+          <option value="proyecto" data-i18n="tipo_proyecto">Proyecto</option>
+          <option value="practica" data-i18n="tipo_practica">Práctica</option>
+          <option value="otro" data-i18n="tipo_otro">Otro</option>
         </select>
-        <label class="field-label">Porcentaje (%)</label>
+        <label class="field-label" data-i18n="label_pct">Porcentaje (%)</label>
         <input type="number" class="field-input" id="input-actividad-porcentaje" placeholder="Ej: 40" min="0" max="100" />
-        <label class="field-label">Nota (opcional)</label>
+        <label class="field-label" data-i18n="label_nota">Nota (opcional)</label>
         <input type="number" class="field-input" id="input-actividad-nota" placeholder="0 – 10" min="0" max="10" step="0.1" />
       </div>
       <div class="modal-footer">
-        <button class="btn-ghost" onclick="closeModal('modal-nueva-actividad')">Cancelar</button>
-        <button class="btn-primary" onclick="crearActividad()">Añadir</button>
+        <button class="btn-ghost" onclick="closeModal('modal-nueva-actividad')" data-i18n="cancelar">Cancelar</button>
+        <button class="btn-primary" onclick="crearActividad()" data-i18n="añadir">Añadir</button>
       </div>
     </div>
   </div>
@@ -215,43 +299,92 @@
   <div class="modal-overlay" id="modal-editar-actividad">
     <div class="modal">
       <div class="modal-header">
-        <span>Editar actividad</span>
+        <span data-i18n="modal_editar_act">Editar actividad</span>
         <button onclick="closeModal('modal-editar-actividad')">✕</button>
       </div>
       <div class="modal-body">
         <input type="hidden" id="edit-actividad-id" />
-        <label class="field-label">Nombre</label>
+        <label class="field-label" data-i18n="label_nombre">Nombre</label>
         <input type="text" class="field-input" id="edit-actividad-nombre" />
-        <label class="field-label">Tipo</label>
+        <label class="field-label" data-i18n="label_tipo">Tipo</label>
         <select class="field-input" id="edit-actividad-tipo">
-          <option value="examen">Examen</option>
-          <option value="trabajo">Trabajo</option>
-          <option value="proyecto">Proyecto</option>
-          <option value="practica">Práctica</option>
-          <option value="otro">Otro</option>
+          <option value="examen" data-i18n="tipo_examen">Examen</option>
+          <option value="trabajo" data-i18n="tipo_trabajo">Trabajo</option>
+          <option value="proyecto" data-i18n="tipo_proyecto">Proyecto</option>
+          <option value="practica" data-i18n="tipo_practica">Práctica</option>
+          <option value="otro" data-i18n="tipo_otro">Otro</option>
         </select>
-        <label class="field-label">Porcentaje (%)</label>
+        <label class="field-label" data-i18n="label_pct">Porcentaje (%)</label>
         <input type="number" class="field-input" id="edit-actividad-porcentaje" min="0" max="100" />
-        <label class="field-label">Nota</label>
+        <label class="field-label" data-i18n="label_nota">Nota</label>
         <input type="number" class="field-input" id="edit-actividad-nota" min="0" max="10" step="0.1" />
       </div>
       <div class="modal-footer">
-        <button class="btn-ghost" onclick="closeModal('modal-editar-actividad')">Cancelar</button>
-        <button class="btn-primary" onclick="guardarEdicionActividad()">Guardar</button>
+        <button class="btn-ghost" onclick="closeModal('modal-editar-actividad')" data-i18n="cancelar">Cancelar</button>
+        <button class="btn-primary" onclick="guardarEdicionActividad()" data-i18n="guardar">Guardar</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal confirmar — botón con onclick directo para evitar doble listener -->
+  <!-- Modal Nueva Tarea -->
+  <div class="modal-overlay" id="modal-nueva-tarea">
+    <div class="modal">
+      <div class="modal-header">
+        <span data-i18n="modal_nueva_tarea">Nueva tarea</span>
+        <button onclick="closeModal('modal-nueva-tarea')">✕</button>
+      </div>
+      <div class="modal-body">
+        <label class="field-label" data-i18n="label_tarea_titulo">Título</label>
+        <input type="text" class="field-input" id="input-tarea-titulo" data-i18n-placeholder="placeholder_tarea_titulo" placeholder="Ej: Entregar trabajo de historia" />
+        <label class="field-label" data-i18n="label_tarea_desc">Descripción (opcional)</label>
+        <textarea class="field-input field-textarea" id="input-tarea-desc" data-i18n-placeholder="placeholder_tarea_desc" placeholder="Notas adicionales..." rows="3"></textarea>
+        <label class="field-label" data-i18n="label_tarea_fecha">Fecha de entrega</label>
+        <input type="date" class="field-input" id="input-tarea-fecha" />
+        <label class="field-label" data-i18n="label_tarea_color">Color de tarjeta</label>
+        <div class="tarea-color-picker" id="tarea-color-picker"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" onclick="closeModal('modal-nueva-tarea')" data-i18n="cancelar">Cancelar</button>
+        <button class="btn-primary" onclick="crearTarea()" data-i18n="crear">Crear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar Tarea -->
+  <div class="modal-overlay" id="modal-editar-tarea">
+    <div class="modal">
+      <div class="modal-header">
+        <span data-i18n="modal_editar_tarea">Editar tarea</span>
+        <button onclick="closeModal('modal-editar-tarea')">✕</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-tarea-id" />
+        <label class="field-label" data-i18n="label_tarea_titulo">Título</label>
+        <input type="text" class="field-input" id="edit-tarea-titulo" />
+        <label class="field-label" data-i18n="label_tarea_desc">Descripción</label>
+        <textarea class="field-input field-textarea" id="edit-tarea-desc" rows="3"></textarea>
+        <label class="field-label" data-i18n="label_tarea_fecha">Fecha de entrega</label>
+        <input type="date" class="field-input" id="edit-tarea-fecha" />
+        <label class="field-label" data-i18n="label_tarea_color">Color de tarjeta</label>
+        <div class="tarea-color-picker" id="edit-tarea-color-picker"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-ghost" onclick="closeModal('modal-editar-tarea')" data-i18n="cancelar">Cancelar</button>
+        <button class="btn-primary" onclick="guardarEdicionTarea()" data-i18n="guardar">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmar -->
   <div class="modal-overlay" id="modal-confirmar">
     <div class="modal">
-      <div class="modal-header"><span>¿Confirmar?</span></div>
+      <div class="modal-header"><span data-i18n="confirmar_titulo">¿Confirmar?</span></div>
       <div class="modal-body">
         <p class="modal-text" id="confirmar-texto"></p>
       </div>
       <div class="modal-footer">
-        <button class="btn-ghost" onclick="closeModal('modal-confirmar')">Cancelar</button>
-        <button class="btn-danger" onclick="ejecutarConfirmacion()">Confirmar</button>
+        <button class="btn-ghost" onclick="closeModal('modal-confirmar')" data-i18n="cancelar">Cancelar</button>
+        <button class="btn-danger" onclick="ejecutarConfirmacion()" data-i18n="confirmar">Confirmar</button>
       </div>
     </div>
   </div>
