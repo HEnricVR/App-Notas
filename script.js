@@ -79,18 +79,38 @@ function calcularMedia(asignatura) {
   const acts = asignatura.actividades || [];
   const withNota = acts.filter(a => a.nota !== '' && a.nota !== null && a.nota !== undefined);
   if (withNota.length === 0) return null;
-  let sumPesos = 0, sumNotas = 0;
+
+  // Agrupar por porcentaje: las actividades con el mismo % comparten ese porcentaje.
+  // Dentro de cada grupo se hace la media de notas, luego se aplica el % una sola vez.
+  // Ej: dos exámenes al 30% con notas 3 y 8 → media 5.5 → aportan 5.5 × 0.30 = 1.65
+  const grupos = {};
   withNota.forEach(a => {
     const pct = parseFloat(a.porcentaje) || 0;
-    sumNotas += (parseFloat(a.nota) || 0) * pct;
-    sumPesos += pct;
+    const key = pct.toString();
+    if (!grupos[key]) grupos[key] = { pct, notas: [] };
+    grupos[key].notas.push(parseFloat(a.nota) || 0);
   });
-  if (sumPesos === 0) return null;
-  return (sumNotas / sumPesos).toFixed(2);
+
+  let notaFinal = 0;
+  let pctAcumulado = 0;
+  Object.values(grupos).forEach(g => {
+    const mediaGrupo = g.notas.reduce((s, n) => s + n, 0) / g.notas.length;
+    notaFinal += mediaGrupo * (g.pct / 100);
+    pctAcumulado += g.pct;
+  });
+
+  if (pctAcumulado === 0) return null;
+
+  // Escalar al porcentaje evaluado (por si no está al 100% todavía)
+  return (notaFinal / (pctAcumulado / 100)).toFixed(2);
 }
 
 function calcularPctTotal(asignatura) {
-  return (asignatura.actividades || []).reduce((acc, a) => acc + (parseFloat(a.porcentaje) || 0), 0);
+  // Los porcentajes únicos cuentan una sola vez (igual que en el cálculo)
+  const pctUnicos = new Set(
+    (asignatura.actividades || []).map(a => parseFloat(a.porcentaje) || 0)
+  );
+  return [...pctUnicos].reduce((acc, p) => acc + p, 0);
 }
 
 function escapeHtml(str) {
