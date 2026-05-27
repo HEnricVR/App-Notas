@@ -19,6 +19,7 @@ const TRANSLATIONS = {
     label_nombre:'Nombre', label_nombre_act:'Nombre de la actividad', label_tipo:'Tipo',
     label_pct:'Porcentaje (%)', label_nota:'Nota (opcional)',
     label_tarea_titulo:'Título', label_tarea_desc:'Descripción (opcional)', label_tarea_fecha:'Fecha de entrega', label_tarea_color:'Color de tarjeta',
+    label_tarea_hora:'Hora de entrega',
     placeholder_asig:'Ej: Matemáticas', placeholder_act:'Ej: Examen parcial',
     placeholder_tarea_titulo:'Ej: Entregar trabajo de historia', placeholder_tarea_desc:'Notas adicionales...',
     tipo_examen:'Examen', tipo_trabajo:'Trabajo', tipo_proyecto:'Proyecto', tipo_practica:'Práctica', tipo_otro:'Otro',
@@ -60,6 +61,7 @@ const TRANSLATIONS = {
     label_nombre:'Name', label_nombre_act:'Activity name', label_tipo:'Type',
     label_pct:'Percentage (%)', label_nota:'Grade (optional)',
     label_tarea_titulo:'Title', label_tarea_desc:'Description (optional)', label_tarea_fecha:'Due date', label_tarea_color:'Card color',
+    label_tarea_hora:'Due time',
     placeholder_asig:'E.g.: Mathematics', placeholder_act:'E.g.: Midterm exam',
     placeholder_tarea_titulo:'E.g.: Submit history paper', placeholder_tarea_desc:'Additional notes...',
     tipo_examen:'Exam', tipo_trabajo:'Assignment', tipo_proyecto:'Project', tipo_practica:'Practice', tipo_otro:'Other',
@@ -101,6 +103,7 @@ const TRANSLATIONS = {
     label_nombre:'Nom', label_nombre_act:'Nom de l\'activité', label_tipo:'Type',
     label_pct:'Pourcentage (%)', label_nota:'Note (optionnel)',
     label_tarea_titulo:'Titre', label_tarea_desc:'Description (optionnel)', label_tarea_fecha:'Date limite', label_tarea_color:'Couleur de la carte',
+    label_tarea_hora:'Heure limite',
     placeholder_asig:'Ex: Mathématiques', placeholder_act:'Ex: Examen partiel',
     placeholder_tarea_titulo:'Ex: Remettre le devoir d\'histoire', placeholder_tarea_desc:'Notes supplémentaires...',
     tipo_examen:'Examen', tipo_trabajo:'Devoir', tipo_proyecto:'Projet', tipo_practica:'TP', tipo_otro:'Autre',
@@ -142,6 +145,7 @@ const TRANSLATIONS = {
     label_nombre:'Name', label_nombre_act:'Name der Aktivität', label_tipo:'Typ',
     label_pct:'Prozentsatz (%)', label_nota:'Note (optional)',
     label_tarea_titulo:'Titel', label_tarea_desc:'Beschreibung (optional)', label_tarea_fecha:'Fälligkeitsdatum', label_tarea_color:'Kartenfarbe',
+    label_tarea_hora:'Abgabezeit',
     placeholder_asig:'z.B.: Mathematik', placeholder_act:'z.B.: Zwischenprüfung',
     placeholder_tarea_titulo:'z.B.: Geschichtsarbeit abgeben', placeholder_tarea_desc:'Zusätzliche Notizen...',
     tipo_examen:'Prüfung', tipo_trabajo:'Hausarbeit', tipo_proyecto:'Projekt', tipo_practica:'Übung', tipo_otro:'Sonstiges',
@@ -183,6 +187,7 @@ const TRANSLATIONS = {
     label_nombre:'Nome', label_nombre_act:'Nome da atividade', label_tipo:'Tipo',
     label_pct:'Percentagem (%)', label_nota:'Nota (opcional)',
     label_tarea_titulo:'Título', label_tarea_desc:'Descrição (opcional)', label_tarea_fecha:'Data de entrega', label_tarea_color:'Cor do cartão',
+    label_tarea_hora:'Hora de entrega',
     placeholder_asig:'Ex: Matemática', placeholder_act:'Ex: Exame parcial',
     placeholder_tarea_titulo:'Ex: Entregar trabalho de história', placeholder_tarea_desc:'Notas adicionais...',
     tipo_examen:'Exame', tipo_trabajo:'Trabalho', tipo_proyecto:'Projeto', tipo_practica:'Prática', tipo_otro:'Outro',
@@ -224,6 +229,7 @@ const TRANSLATIONS = {
     label_nombre:'名称', label_nombre_act:'活动名称', label_tipo:'类型',
     label_pct:'百分比 (%)', label_nota:'成绩 (可选)',
     label_tarea_titulo:'标题', label_tarea_desc:'描述 (可选)', label_tarea_fecha:'截止日期', label_tarea_color:'卡片颜色',
+    label_tarea_hora:'截止时间',
     placeholder_asig:'例：数学', placeholder_act:'例：期中考试',
     placeholder_tarea_titulo:'例：提交历史作业', placeholder_tarea_desc:'附加说明...',
     tipo_examen:'考试', tipo_trabajo:'作业', tipo_proyecto:'项目', tipo_practica:'实践', tipo_otro:'其他',
@@ -265,6 +271,7 @@ const TRANSLATIONS = {
     label_nombre:'Название', label_nombre_act:'Название задания', label_tipo:'Тип',
     label_pct:'Процент (%)', label_nota:'Оценка (необязательно)',
     label_tarea_titulo:'Заголовок', label_tarea_desc:'Описание (необязательно)', label_tarea_fecha:'Дата сдачи', label_tarea_color:'Цвет карточки',
+    label_tarea_hora:'Время сдачи',
     placeholder_asig:'Напр: Математика', placeholder_act:'Напр: Промежуточный экзамен',
     placeholder_tarea_titulo:'Напр: Сдать работу по истории', placeholder_tarea_desc:'Дополнительные заметки...',
     tipo_examen:'Экзамен', tipo_trabajo:'Работа', tipo_proyecto:'Проект', tipo_practica:'Практика', tipo_otro:'Другое',
@@ -306,6 +313,7 @@ const TRANSLATIONS = {
     label_nombre:'नाम', label_nombre_act:'गतिविधि का नाम', label_tipo:'प्रकार',
     label_pct:'प्रतिशत (%)', label_nota:'अंक (वैकल्पिक)',
     label_tarea_titulo:'शीर्षक', label_tarea_desc:'विवरण (वैकल्पिक)', label_tarea_fecha:'नियत तारीख', label_tarea_color:'कार्ड रंग',
+    label_tarea_hora:'जमा करने का समय',
     placeholder_asig:'उदा: गणित', placeholder_act:'उदा: मध्यावधि परीक्षा',
     placeholder_tarea_titulo:'उदा: इतिहास कार्य जमा करें', placeholder_tarea_desc:'अतिरिक्त नोट्स...',
     tipo_examen:'परीक्षा', tipo_trabajo:'कार्य', tipo_proyecto:'परियोजना', tipo_practica:'अभ्यास', tipo_otro:'अन्य',
@@ -446,13 +454,15 @@ function calcularPctTotal(asig) {
 // ============================================================
 // COLOR ACCENT
 // ============================================================
+const TAREA_COLORS = ['#ffffff','#3a9bdc','#30d158','#bf5af2','#ff9f0a','#ff375f','#5ac8fa','#ff453a','#ffd60a'];
+
 const ACCENT_COLORS = [
   {name:'Blanco',value:'#ffffff'},{name:'Azul',value:'#3a9bdc'},
   {name:'Verde',value:'#30d158'},{name:'Lila',value:'#bf5af2'},
   {name:'Naranja',value:'#ff9f0a'},{name:'Rosa',value:'#ff375f'},
   {name:'Cyan',value:'#5ac8fa'},{name:'Rojo',value:'#ff453a'},
 ];
-const TAREA_COLORS = ['#ffffff','#3a9bdc','#30d158','#bf5af2','#ff9f0a','#ff375f','#5ac8fa','#ff453a','#ffd60a'];
+
 
 function applyAccentColor(color) {
   const r=parseInt(color.slice(1,3),16),g=parseInt(color.slice(3,5),16),b=parseInt(color.slice(5,7),16);
@@ -497,7 +507,6 @@ function navigate(view, asigId=null) {
 // ============================================================
 function openModal(id) {
   document.getElementById(id).classList.add('open');
-  // Inicializar color pickers al abrir el modal
   if (id === 'modal-nueva-tarea') {
     selectedTareaColor = selectedTareaColor || TAREA_COLORS[0];
     renderColorPicker('tarea-color-picker', selectedTareaColor, c => { selectedTareaColor = c; });
@@ -649,17 +658,21 @@ function eliminarActividad(actId) {
 let selectedTareaColor = TAREA_COLORS[0];
 let editTareaColor = TAREA_COLORS[0];
 
+
+
+
 function renderColorPicker(containerId, selectedColor, onSelect) {
   const container = document.getElementById(containerId);
+  if (!container) return;
   container.innerHTML = '';
   TAREA_COLORS.forEach(c => {
     const btn = document.createElement('button');
-    btn.className = 'tarea-color-swatch' + (c===selectedColor?' active':'');
+    btn.className = 'tarea-color-swatch' + (c === selectedColor ? ' active' : '');
     btn.style.background = c;
     btn.type = 'button';
     btn.onclick = () => {
       onSelect(c);
-      container.querySelectorAll('.tarea-color-swatch').forEach(s=>s.classList.remove('active'));
+      container.querySelectorAll('.tarea-color-swatch').forEach(s => s.classList.remove('active'));
       btn.classList.add('active');
     };
     container.appendChild(btn);
@@ -691,7 +704,11 @@ function renderTareas() {
       if (diff===0){fechaHtml=t('vence_hoy');fechaClass='vence-hoy';}
       else if(diff<0){fechaHtml=t('vencida');fechaClass='vencida';}
       else fechaHtml=tarea.fecha;
-    } else fechaHtml=t('sin_fecha');
+      if (tarea.hora) fechaHtml += ' · ' + tarea.hora;
+    } else {
+      fechaHtml = t('sin_fecha');
+      if (tarea.hora) fechaHtml += ' · ' + tarea.hora;
+    }
 
     card.innerHTML = `
       <div class="tarea-card-accent" style="background:${tarea.color||'#fff'}"></div>
@@ -784,16 +801,18 @@ function crearTarea() {
   const titulo=document.getElementById('input-tarea-titulo').value.trim();
   const desc=document.getElementById('input-tarea-desc').value.trim();
   const fecha=document.getElementById('input-tarea-fecha').value;
+  const hora=document.getElementById('input-tarea-hora').value;
   if (!titulo){showToast(t('toast_nombre_requerido'));return;}
   const tareas=DB.getTareas();
   // Posición escalonada para que no se amontonen
   const offset=(tareas.length%5)*30;
-  tareas.push({id:uid(),titulo,desc,fecha,color:selectedTareaColor,x:20+offset,y:20+offset});
+  tareas.push({id:uid(),titulo,desc,fecha,hora,color:selectedTareaColor,x:20+offset,y:20+offset});
   DB.saveTareas(tareas);
   document.getElementById('input-tarea-titulo').value='';
   document.getElementById('input-tarea-desc').value='';
   document.getElementById('input-tarea-fecha').value='';
-  selectedTareaColor=TAREA_COLORS[0];
+  document.getElementById('input-tarea-hora').value='';
+  selectedTareaColor = TAREA_COLORS[0];
   closeModal('modal-nueva-tarea');
   renderTareas();
   showToast(t('toast_tarea_creada'));
@@ -805,8 +824,9 @@ function abrirEdicionTarea(id) {
   document.getElementById('edit-tarea-titulo').value=tarea.titulo;
   document.getElementById('edit-tarea-desc').value=tarea.desc||'';
   document.getElementById('edit-tarea-fecha').value=tarea.fecha||'';
-  editTareaColor=tarea.color||TAREA_COLORS[0];
-  renderColorPicker('edit-tarea-color-picker',editTareaColor,c=>editTareaColor=c);
+  document.getElementById('edit-tarea-hora').value=tarea.hora||'';
+  editTareaColor = tarea.color || TAREA_COLORS[0];
+  renderColorPicker('edit-tarea-color-picker', editTareaColor, c => editTareaColor = c);
   openModal('modal-editar-tarea');
 }
 
@@ -815,8 +835,9 @@ function guardarEdicionTarea() {
   const titulo=document.getElementById('edit-tarea-titulo').value.trim();
   const desc=document.getElementById('edit-tarea-desc').value.trim();
   const fecha=document.getElementById('edit-tarea-fecha').value;
+  const hora=document.getElementById('edit-tarea-hora').value;
   if (!titulo){showToast(t('toast_nombre_requerido'));return;}
-  const tareas=DB.getTareas().map(t2=>t2.id!==id?t2:{...t2,titulo,desc,fecha,color:editTareaColor});
+  const tareas=DB.getTareas().map(t2=>t2.id!==id?t2:{...t2,titulo,desc,fecha,hora,color:editTareaColor});
   DB.saveTareas(tareas);
   closeModal('modal-editar-tarea');
   renderTareas();
@@ -830,7 +851,7 @@ function eliminarTarea(id) {
   });
 }
 
-// Color pickers initialized in openModal()
+
 
 // ============================================================
 // VIEW: HORARIO
@@ -1004,5 +1025,5 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => { splash.style.display = 'none'; }, 450);
   }, 1400);
 
-  // Color pickers are handled inside openModal()
+  
 });

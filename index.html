@@ -6,8 +6,11 @@
   <title>Study OS</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png" />
+  <meta name="theme-color" content="#000000" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Space+Grotesk:wght@300;400;500;600&display=swap" rel="stylesheet" />
 </head>
@@ -340,6 +343,8 @@
         <textarea class="field-input field-textarea" id="input-tarea-desc" data-i18n-placeholder="placeholder_tarea_desc" placeholder="Notas adicionales..." rows="3"></textarea>
         <label class="field-label" data-i18n="label_tarea_fecha">Fecha de entrega</label>
         <input type="date" class="field-input" id="input-tarea-fecha" />
+        <label class="field-label" data-i18n="label_tarea_hora">Hora de entrega</label>
+        <input type="time" class="field-input" id="input-tarea-hora" />
         <label class="field-label" data-i18n="label_tarea_color">Color de tarjeta</label>
         <div class="tarea-color-picker" id="tarea-color-picker"></div>
       </div>
@@ -365,6 +370,8 @@
         <textarea class="field-input field-textarea" id="edit-tarea-desc" rows="3"></textarea>
         <label class="field-label" data-i18n="label_tarea_fecha">Fecha de entrega</label>
         <input type="date" class="field-input" id="edit-tarea-fecha" />
+        <label class="field-label" data-i18n="label_tarea_hora">Hora de entrega</label>
+        <input type="time" class="field-input" id="edit-tarea-hora" />
         <label class="field-label" data-i18n="label_tarea_color">Color de tarjeta</label>
         <div class="tarea-color-picker" id="edit-tarea-color-picker"></div>
       </div>
