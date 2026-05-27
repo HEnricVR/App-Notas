@@ -506,7 +506,15 @@ function navigate(view, asigId=null) {
 // MODALS
 // ============================================================
 function openModal(id) {
-  document.getElementById(id).classList.add('open');
+  const el = document.getElementById(id);
+  el.classList.add('open');
+  // Re-aplicar traducciones dentro del modal por si acaso
+  el.querySelectorAll('[data-i18n]').forEach(node => {
+    const key = node.getAttribute('data-i18n');
+    const val = t(key);
+    if (node.tagName === 'INPUT' || node.tagName === 'TEXTAREA') node.value = val;
+    else node.innerHTML = val.replace(/\n/g, '<br/>');
+  });
   if (id === 'modal-nueva-tarea') {
     selectedTareaColor = selectedTareaColor || TAREA_COLORS[0];
     renderColorPicker('tarea-color-picker', selectedTareaColor, c => { selectedTareaColor = c; });
@@ -701,14 +709,13 @@ function renderTareas() {
     if (tarea.fecha) {
       const d = new Date(tarea.fecha+'T00:00:00');
       const diff = Math.round((d-today)/(1000*60*60*24));
-      if (diff===0){fechaHtml=t('vence_hoy');fechaClass='vence-hoy';}
-      else if(diff<0){fechaHtml=t('vencida');fechaClass='vencida';}
-      else fechaHtml=tarea.fecha;
-      if (tarea.hora) fechaHtml += ' · ' + tarea.hora;
+      if (diff===0){ fechaHtml=t('vence_hoy'); fechaClass='vence-hoy'; }
+      else if(diff<0){ fechaHtml=t('vencida'); fechaClass='vencida'; }
+      else { fechaHtml=tarea.fecha; }
     } else {
       fechaHtml = t('sin_fecha');
-      if (tarea.hora) fechaHtml += ' · ' + tarea.hora;
     }
+    if (tarea.hora) fechaHtml += ' · ' + tarea.hora;
 
     card.innerHTML = `
       <div class="tarea-card-accent" style="background:${tarea.color||'#fff'}"></div>
