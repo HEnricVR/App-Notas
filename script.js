@@ -495,7 +495,17 @@ function navigate(view, asigId=null) {
 // ============================================================
 // MODALS
 // ============================================================
-function openModal(id) { document.getElementById(id).classList.add('open'); }
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  // Inicializar color pickers al abrir el modal
+  if (id === 'modal-nueva-tarea') {
+    selectedTareaColor = selectedTareaColor || TAREA_COLORS[0];
+    renderColorPicker('tarea-color-picker', selectedTareaColor, c => { selectedTareaColor = c; });
+  }
+  if (id === 'modal-editar-tarea') {
+    renderColorPicker('edit-tarea-color-picker', editTareaColor, c => { editTareaColor = c; });
+  }
+}
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
 document.querySelectorAll('.modal-overlay').forEach(o => o.addEventListener('click', function(e){ if(e.target===this) this.classList.remove('open'); }));
 
@@ -820,16 +830,7 @@ function eliminarTarea(id) {
   });
 }
 
-// Inicializar pickers al abrir modales
-document.getElementById('modal-nueva-tarea').addEventListener('click',()=>{});
-// Init color picker nueva tarea al abrir modal
-const modalNuevaTarea=document.getElementById('modal-nueva-tarea');
-modalNuevaTarea.addEventListener('transitionend',()=>{
-  if(modalNuevaTarea.classList.contains('open')) {
-    selectedTareaColor=TAREA_COLORS[0];
-    renderColorPicker('tarea-color-picker',selectedTareaColor,c=>selectedTareaColor=c);
-  }
-});
+// Color pickers initialized in openModal()
 
 // ============================================================
 // VIEW: HORARIO
@@ -1003,10 +1004,5 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => { splash.style.display = 'none'; }, 450);
   }, 1400);
 
-  // Color picker nueva tarea
-  document.querySelectorAll('[onclick*="modal-nueva-tarea"]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      setTimeout(() => renderColorPicker('tarea-color-picker', selectedTareaColor, c => selectedTareaColor = c), 80);
-    });
-  });
+  // Color pickers are handled inside openModal()
 });
